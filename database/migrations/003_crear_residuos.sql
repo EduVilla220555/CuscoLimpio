@@ -1,0 +1,21 @@
+-- 003_crear_residuos.sql
+CREATE TABLE IF NOT EXISTS tipos_residuos (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	nombre VARCHAR(100) NOT NULL,
+	descripcion TEXT,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS residuos (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	tipo_id INT NOT NULL,
+	descripcion TEXT,
+	peso DECIMAL(8,2) DEFAULT 0,
+	zona_id INT,
+	usuario_id INT,
+	fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	FOREIGN KEY (tipo_id) REFERENCES tipos_residuos(id) ON DELETE RESTRICT,
+	FOREIGN KEY (zona_id) REFERENCES zonas(id) ON DELETE SET NULL,
+	FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+ 
