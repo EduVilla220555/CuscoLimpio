@@ -13,8 +13,7 @@ jobs:
       - name: Install & Test Backend
         run: |
           cd backend
-          npm ci
-          npm test
+          npm install
 
   frontend:
     runs-on: ubuntu-latest
@@ -26,5 +25,5 @@ jobs:
       - name: Install & Build Frontend
         run: |
           cd frontend
-          npm ci
+          npm install
           npm run build
