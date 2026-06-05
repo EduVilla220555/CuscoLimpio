@@ -1,3 +1,55 @@
+# CuscoLimpio
+
+Proyecto de gestión de alertas, rutas y residuos para el distrito de Cusco.
+
+## Estructura
+- `backend/` — API Node.js + Express
+- `frontend/` — Cliente React (Vite)
+- `database/` — esquema, migraciones y seeds
+
+## Requisitos
+- Node.js 18+ y npm
+- MySQL (o MariaDB)
+
+## Variables de entorno (resumen)
+- `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`
+- `JWT_SECRET`
+- Frontend: `VITE_API_URL` (ej. `http://localhost:3000/api`)
+
+## Ejecutar localmente
+
+Backend
+```bash
+cd backend
+npm install
+cp .env.example .env    # editar con tus credenciales
+# ejecutar migraciones y seeds según instrucciones en database/
+npm run dev
+```
+
+Frontend
+```bash
+cd frontend
+npm install
+cp .env.example .env    # establecer VITE_API_URL
+npm run dev
+```
+
+## Tests
+- Backend: en la carpeta `backend` hay pruebas con Jest / supertest.
+
+## Seeds y usuarios de prueba
+En `backend/scripts/seed_users.js` se incluyen usuarios de ejemplo: `admin@cuscolimpio.local`, `supervisor@cuscolimpio.local`, `operador@cuscolimpio.local`.
+
+## Contribuir
+- Crear ramas por feature: `feature/<descripcion>`
+- Abrir PRs hacia `main` y solicitar revisión.
+
+## CI
+Se incluye un workflow básico en `.github/workflows/nodejs.yml` que ejecuta tests y build.
+
+## Licencia
+MIT
 # CuscoLimpio - Sistema de Gestión de Recolección de Residuos Sólidos
 
 ## 📋 Descripción
