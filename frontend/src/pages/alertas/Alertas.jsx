@@ -15,7 +15,7 @@ const initialForm = {
 
 export default function Alertas() {
 	const { user } = useAuth();
-	const isOperator = user?.role === 'operador' || user?.role === 'operario';
+	const isOperator = user?.role === 'operador';
 	const canManageAlerts = !isOperator;
 	const [items, setItems] = useState([]);
 	const [zonas, setZonas] = useState([]);

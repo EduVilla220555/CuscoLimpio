@@ -2,12 +2,12 @@ import { NavLink, Outlet } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 
 const menuItems = [
-	{ to: '/dashboard', label: 'Resumen', roles: ['admin', 'supervisor', 'operador', 'operario'] },
+	{ to: '/dashboard', label: 'Resumen', roles: ['admin', 'supervisor', 'operador'] },
 	{ to: '/usuarios', label: 'Usuarios', roles: ['admin'] },
 	{ to: '/zonas', label: 'Zonas', roles: ['admin', 'supervisor'] },
 	{ to: '/residuos', label: 'Residuos', roles: ['admin', 'supervisor'] },
-	{ to: '/rutas', label: 'Rutas', roles: ['admin', 'supervisor', 'operador', 'operario'] },
-	{ to: '/alertas', label: 'Alertas', roles: ['admin', 'supervisor', 'operador', 'operario'] },
+	{ to: '/rutas', label: 'Rutas', roles: ['admin', 'supervisor', 'operador'] },
+	{ to: '/alertas', label: 'Alertas', roles: ['admin', 'supervisor', 'operador'] },
 	{ to: '/reportes', label: 'Reportes', roles: ['admin', 'supervisor'] }
 ];
 
@@ -16,10 +16,10 @@ export default function Layout() {
 	const visibleMenuItems = menuItems
 		.filter((item) => !item.roles || item.roles.includes(user?.role))
 		.map((item) => {
-			if ((user?.role === 'operador' || user?.role === 'operario') && item.to === '/rutas') {
+			if (user?.role === 'operador' && item.to === '/rutas') {
 				return { ...item, label: 'Mis rutas' };
 			}
-			if ((user?.role === 'operador' || user?.role === 'operario') && item.to === '/alertas') {
+			if (user?.role === 'operador' && item.to === '/alertas') {
 				return { ...item, label: 'Mis alertas' };
 			}
 			return item;

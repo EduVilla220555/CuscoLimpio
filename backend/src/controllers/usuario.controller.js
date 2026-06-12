@@ -2,7 +2,7 @@ const userModel = require('../models/usuario.model');
 const { hashPassword } = require('../utils/helpers');
 const { sendJSON } = require('../utils/helpers');
 
-const allowedRoles = new Set(['admin', 'supervisor', 'operador', 'operario']);
+const allowedRoles = new Set(['admin', 'supervisor', 'operador']);
 
 function normalizeRole(role) {
 	return role || 'operador';

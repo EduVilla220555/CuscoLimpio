@@ -72,9 +72,9 @@ export default function Login() {
 						{loading ? 'Ingresando...' : 'Entrar'}
 					</button>
 				</form>
-				<p className="auth-footer">
-					¿No tienes cuenta? <Link to="/register">Registrar usuario</Link>
-				</p>
+				{/* <p className="auth-footer">
+					¿No tienes cuenta? Contacta al administrador del sistema.
+				</p> */}
 			</section>
 		</div>
 	);

@@ -29,7 +29,7 @@ const operarioActions = [
 export default function Dashboard() {
 	const { user } = useAuth();
 	const isAdmin = user?.role === 'admin';
-	const isOperario = user?.role === 'operador' || user?.role === 'operario';
+	const isOperario = user?.role === 'operador';
 	const [operatorStats, setOperatorStats] = useState({ rutasAsignadas: 0, alertasPendientes: 0, tareasHoy: 0 });
 	const [operatorStatsLoading, setOperatorStatsLoading] = useState(false);
 	const [supervisorForm, setSupervisorForm] = useState({ nombre: '', email: '', password: '' });

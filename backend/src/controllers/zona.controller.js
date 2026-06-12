@@ -26,13 +26,13 @@ async function show(req, res, next) {
 
 async function store(req, res, next) {
 	try {
-		const { nombre, descripcion = null, centro_lat = null, centro_lng = null } = req.body;
+		const { nombre, descripcion = null, distrito = null, calles_recorrer = null, centro_lat = null, centro_lng = null } = req.body;
 
 		if (!nombre) {
 			return sendJSON(res, 400, { success: false, message: 'nombre es obligatorio' });
 		}
 
-		const zone = await zoneModel.createZone({ nombre, descripcion, centro_lat, centro_lng });
+		const zone = await zoneModel.createZone({ nombre, descripcion, distrito, calles_recorrer, centro_lat, centro_lng });
 		return sendJSON(res, 201, { success: true, message: 'Zona creada correctamente', data: zone });
 	} catch (error) {
 		if (error && error.code === 'ER_DUP_ENTRY') {

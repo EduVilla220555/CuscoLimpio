@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
 	nombre VARCHAR(100) NOT NULL,
 	email VARCHAR(150) NOT NULL UNIQUE,
 	password VARCHAR(255) NOT NULL,
-	role ENUM('admin','supervisor','operador','operario') NOT NULL DEFAULT 'operador',
+	role ENUM('admin','supervisor','operador') NOT NULL DEFAULT 'operador',
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -25,6 +25,8 @@ CREATE TABLE IF NOT EXISTS zonas (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	nombre VARCHAR(120) NOT NULL,
 	descripcion TEXT,
+	distrito VARCHAR(100),
+	calles_recorrer TEXT,
 	centro_lat DECIMAL(10,7),
 	centro_lng DECIMAL(10,7),
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -88,6 +90,6 @@ CREATE TABLE IF NOT EXISTS reportes (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Índices útiles
-CREATE INDEX IF NOT EXISTS idx_residuos_tipo ON residuos(tipo_id);
-CREATE INDEX IF NOT EXISTS idx_residuos_zona ON residuos(zona_id);
+CREATE INDEX idx_residuos_tipo ON residuos(tipo_id);
+CREATE INDEX idx_residuos_zona ON residuos(zona_id);
  

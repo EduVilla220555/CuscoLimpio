@@ -4,7 +4,6 @@ const authMiddleware = require('../middlewares/auth.middleware');
 
 const router = express.Router();
 
-router.post('/register', authController.register);
 router.post('/register-supervisor', authMiddleware, authController.createSupervisor);
 router.post('/login', authController.login);
 router.post('/logout', authController.logout);

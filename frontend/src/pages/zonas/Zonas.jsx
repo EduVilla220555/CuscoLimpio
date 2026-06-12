@@ -4,6 +4,8 @@ import zonaApi from '../../api/zona.api';
 const initialForm = {
 	nombre: '',
 	descripcion: '',
+	distrito: '',
+	calles_recorrer: '',
 	centro_lat: '',
 	centro_lng: ''
 };
@@ -44,6 +46,8 @@ export default function Zonas() {
 		setForm({
 			nombre: zone.nombre || '',
 			descripcion: zone.descripcion || '',
+			distrito: zone.distrito || '',
+			calles_recorrer: zone.calles_recorrer || '',
 			centro_lat: zone.centro_lat ?? '',
 			centro_lng: zone.centro_lng ?? ''
 		});
@@ -66,6 +70,8 @@ export default function Zonas() {
 			const payload = {
 				nombre: form.nombre,
 				descripcion: form.descripcion || null,
+				distrito: form.distrito || null,
+				calles_recorrer: form.calles_recorrer || null,
 				centro_lat: form.centro_lat === '' ? null : Number(form.centro_lat),
 				centro_lng: form.centro_lng === '' ? null : Number(form.centro_lng)
 			};
@@ -127,6 +133,14 @@ export default function Zonas() {
 							<textarea name="descripcion" rows="4" value={form.descripcion} onChange={handleChange} />
 						</label>
 						<label className="field">
+							<span>Distrito</span>
+							<input name="distrito" value={form.distrito} onChange={handleChange} />
+						</label>
+						<label className="field">
+							<span>Calles a recorrer</span>
+							<textarea name="calles_recorrer" rows="3" value={form.calles_recorrer} onChange={handleChange} />
+						</label>
+						<label className="field">
 							<span>Latitud</span>
 							<input name="centro_lat" value={form.centro_lat} onChange={handleChange} />
 						</label>
@@ -163,6 +177,8 @@ export default function Zonas() {
 									<tr>
 										<th>Nombre</th>
 										<th>Descripción</th>
+										<th>Distrito</th>
+										<th>Calles</th>
 										<th>Coordenadas</th>
 										<th>Acciones</th>
 									</tr>
@@ -172,6 +188,10 @@ export default function Zonas() {
 										<tr key={zone.id}>
 											<td>{zone.nombre}</td>
 											<td>{zone.descripcion || '-'}</td>
+											<td>{zone.distrito || '-'}</td>
+											<td title={zone.calles_recorrer || ''}>
+												{zone.calles_recorrer ? (zone.calles_recorrer.length > 30 ? zone.calles_recorrer.substring(0, 30) + '...' : zone.calles_recorrer) : '-'}
+											</td>
 											<td>{zone.centro_lat ?? '-'}, {zone.centro_lng ?? '-'}</td>
 											<td className="row-actions">
 												<button className="ghost-button" type="button" onClick={() => startEdit(zone)}>Editar</button>

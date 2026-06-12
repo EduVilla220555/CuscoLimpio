@@ -2,28 +2,28 @@ const pool = require('../config/db');
 
 async function listZones() {
 	const [rows] = await pool.execute(
-		'SELECT id, nombre, descripcion, centro_lat, centro_lng, created_at FROM zonas ORDER BY id DESC'
+		'SELECT id, nombre, descripcion, distrito, calles_recorrer, centro_lat, centro_lng, created_at FROM zonas ORDER BY id DESC'
 	);
 	return rows;
 }
 
 async function getZoneById(id) {
 	const [rows] = await pool.execute(
-		'SELECT id, nombre, descripcion, centro_lat, centro_lng, created_at FROM zonas WHERE id = ?',
+		'SELECT id, nombre, descripcion, distrito, calles_recorrer, centro_lat, centro_lng, created_at FROM zonas WHERE id = ?',
 		[id]
 	);
 	return rows[0] || null;
 }
 
-async function createZone({ nombre, descripcion = null, centro_lat = null, centro_lng = null }) {
+async function createZone({ nombre, descripcion = null, distrito = null, calles_recorrer = null, centro_lat = null, centro_lng = null }) {
 	const [result] = await pool.execute(
-		'INSERT INTO zonas (nombre, descripcion, centro_lat, centro_lng) VALUES (?, ?, ?, ?)',
-		[nombre, descripcion, centro_lat, centro_lng]
+		'INSERT INTO zonas (nombre, descripcion, distrito, calles_recorrer, centro_lat, centro_lng) VALUES (?, ?, ?, ?, ?, ?)',
+		[nombre, descripcion, distrito, calles_recorrer, centro_lat, centro_lng]
 	);
 	return getZoneById(result.insertId);
 }
 
-async function updateZone(id, { nombre, descripcion, centro_lat, centro_lng }) {
+async function updateZone(id, { nombre, descripcion, distrito, calles_recorrer, centro_lat, centro_lng }) {
 	const fields = [];
 	const values = [];
 
@@ -35,6 +35,16 @@ async function updateZone(id, { nombre, descripcion, centro_lat, centro_lng }) {
 	if (descripcion !== undefined) {
 		fields.push('descripcion = ?');
 		values.push(descripcion);
+	}
+
+	if (distrito !== undefined) {
+		fields.push('distrito = ?');
+		values.push(distrito);
+	}
+
+	if (calles_recorrer !== undefined) {
+		fields.push('calles_recorrer = ?');
+		values.push(calles_recorrer);
 	}
 
 	if (centro_lat !== undefined) {

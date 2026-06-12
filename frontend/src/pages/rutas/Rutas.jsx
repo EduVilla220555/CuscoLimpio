@@ -21,7 +21,7 @@ const states = [
 
 export default function Rutas() {
 	const { user } = useAuth();
-	const isOperator = user?.role === 'operador' || user?.role === 'operario';
+	const isOperator = user?.role === 'operador';
 	const canManageRoutes = !isOperator;
 	const [items, setItems] = useState([]);
 	const [zonas, setZonas] = useState([]);
@@ -39,12 +39,14 @@ export default function Rutas() {
 		try {
 			const [routes, zoneList, userList] = await Promise.all([
 				rutaApi.listRoutes(),
-				zonaApi.listZones(),
-				usuarioApi.listUsers()
+				canManageRoutes ? zonaApi.listZones() : Promise.resolve([]),
+				canManageRoutes ? usuarioApi.listUsers() : Promise.resolve([])
 			]);
 			setItems(routes);
-			setZonas(zoneList);
-			setUsuarios(userList.filter((usuario) => usuario.role === 'operador' || usuario.role === 'operario' || usuario.role === 'supervisor' || usuario.role === 'admin'));
+			if (canManageRoutes) {
+				setZonas(zoneList);
+				setUsuarios(userList.filter((usuario) => usuario.role === 'operador' || usuario.role === 'supervisor' || usuario.role === 'admin'));
+			}
 		} catch (err) {
 			setError(err?.response?.data?.message || 'No se pudieron cargar las rutas');
 		} finally {

@@ -14,13 +14,12 @@ function requireRole(...roles) {
 const router = express.Router();
 
 router.use(authMiddleware);
-router.use(requireRole('admin'));
 
-router.get('/', controller.index);
-router.get('/:id', controller.show);
-router.post('/', controller.store);
-router.put('/:id', controller.update);
-router.delete('/:id', controller.destroy);
+router.get('/', requireRole('admin', 'supervisor'), controller.index);
+router.get('/:id', requireRole('admin', 'supervisor'), controller.show);
+router.post('/', requireRole('admin'), controller.store);
+router.put('/:id', requireRole('admin'), controller.update);
+router.delete('/:id', requireRole('admin'), controller.destroy);
 
 module.exports = router;
  

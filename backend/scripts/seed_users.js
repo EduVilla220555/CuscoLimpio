@@ -6,8 +6,9 @@ async function run() {
   try {
     const users = [
       { nombre: 'Admin Sistema', email: 'admin@cuscolimpio.local', password: 'Admin123!', role: 'admin' },
-      { nombre: 'Supervisor Cusco', email: 'supervisor@cuscolimpio.local', password: 'Super123!', role: 'supervisor' },
-      { nombre: 'Operador Prueba', email: 'operador@cuscolimpio.local', password: 'Operador123!', role: 'operador' }
+      { nombre: 'Supervisor Prueba', email: 'supervisor@cuscolimpio.local', password: 'Super123!', role: 'supervisor' },
+      { nombre: 'Operador Uno', email: 'operador1@cuscolimpio.local', password: 'Operador123!', role: 'operador' },
+      { nombre: 'Operador Dos', email: 'operador2@cuscolimpio.local', password: 'Operador123!', role: 'operador' }
     ];
 
     for (const u of users) {

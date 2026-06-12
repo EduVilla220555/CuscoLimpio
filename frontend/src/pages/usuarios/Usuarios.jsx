@@ -10,7 +10,6 @@ const initialForm = {
 
 const roles = [
 	{ value: 'operador', label: 'Operador' },
-	{ value: 'operario', label: 'Operario (legacy)' },
 	{ value: 'supervisor', label: 'Supervisor' },
 	{ value: 'admin', label: 'Administrador' }
 ];

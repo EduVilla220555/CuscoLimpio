@@ -128,7 +128,7 @@ export default function AppRouter() {
 				<Route
 					path="/rutas"
 					element={
-						<RoleRoute allowedRoles={['admin', 'supervisor', 'operador', 'operario']}>
+						<RoleRoute allowedRoles={['admin', 'supervisor', 'operador']}>
 							<Rutas />
 						</RoleRoute>
 					}
@@ -136,7 +136,7 @@ export default function AppRouter() {
 				<Route
 					path="/alertas"
 					element={
-						<RoleRoute allowedRoles={['admin', 'supervisor', 'operador', 'operario']}>
+						<RoleRoute allowedRoles={['admin', 'supervisor', 'operador']}>
 							<Alertas />
 						</RoleRoute>
 					}
