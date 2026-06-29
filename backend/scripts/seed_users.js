@@ -5,11 +5,11 @@ const authService = require('../src/services/auth.service');
 async function run() {
   try {
     const users = [
-      { nombre: 'Admin Sistema', email: 'admin@cuscolimpio.local', password: 'Admin123!', role: 'admin' },
+      { nombre: 'Admin Sistema', email: 'admin@cuscolimpio.local', password: 'cd ', role: 'admin' },
       { nombre: 'Supervisor Prueba', email: 'supervisor@cuscolimpio.local', password: 'Super123!', role: 'supervisor' },
       { nombre: 'Operador Uno', email: 'operador1@cuscolimpio.local', password: 'Operador123!', role: 'operador' },
       { nombre: 'Operador Dos', email: 'operador2@cuscolimpio.local', password: 'Operador123!', role: 'operador' },
-      { nombre: 'Operador Tres', email: 'operador3@cuscolimpio.local', password: 'Operador123!', role: 'operador' }
+      { nombre: 'Operador Tres', email: 'operador3@cuscolimpio.local', password: 'Operador123!', role: 'operador' },
     ];
 
     for (const u of users) {

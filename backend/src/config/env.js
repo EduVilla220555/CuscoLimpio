@@ -55,7 +55,15 @@ module.exports = {
 
   // CORS
   cors: {
-    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+    origin: process.env.NODE_ENV === 'development'
+      ? (origin, callback) => {
+          if (!origin || /https?:\/\/localhost:\d+/.test(origin)) {
+            callback(null, true);
+          } else {
+            callback(new Error('No permitido por CORS en producción'));
+          }
+        }
+      : (process.env.FRONTEND_URL || 'http://localhost:5173'),
     credentials: true
   },
 

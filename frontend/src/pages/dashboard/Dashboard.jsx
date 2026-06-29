@@ -30,7 +30,7 @@ export default function Dashboard() {
 	const { user } = useAuth();
 	const isAdmin = user?.role === 'admin';
 	const isOperario = user?.role === 'operador';
-	const [operatorStats, setOperatorStats] = useState({ rutasAsignadas: 0, alertasPendientes: 0, tareasHoy: 0 });
+	const [operatorStats, setOperatorStats] = useState({ rutasAsignadas: 0, tareasHoy: 0 });
 	const [operatorStatsLoading, setOperatorStatsLoading] = useState(false);
 	const [supervisorForm, setSupervisorForm] = useState({ nombre: '', email: '', password: '' });
 	const [supervisorSaving, setSupervisorSaving] = useState(false);
@@ -45,30 +45,21 @@ export default function Dashboard() {
 		let mounted = true;
 		setOperatorStatsLoading(true);
 
-		Promise.all([rutaApi.listRoutes(), alertaApi.listAlerts()])
-			.then(([routes, alerts]) => {
+		rutaApi.listRoutes()
+			.then((routes) => {
 				if (!mounted) return;
 
 				const assignedRoutes = routes.filter((route) => Number(route.operario_id) === Number(user.id));
-				const assignedRouteIds = new Set(assignedRoutes.map((route) => Number(route.id)));
-				const pendingAlerts = alerts.filter((alert) => {
-					const byUser = Number(alert.usuario_id) === Number(user.id);
-					const byRoute = assignedRouteIds.has(Number(alert.ruta_id));
-					const unresolved = alert.estado !== 'resuelta';
-					return unresolved && (byUser || byRoute);
-				});
-
-				const tareasHoy = assignedRoutes.filter((route) => route.estado !== 'completada').length + pendingAlerts.length;
+				const tareasHoy = assignedRoutes.filter((route) => route.estado !== 'completada').length;
 
 				setOperatorStats({
 					rutasAsignadas: assignedRoutes.length,
-					alertasPendientes: pendingAlerts.length,
 					tareasHoy
 				});
 			})
 			.catch(() => {
 				if (!mounted) return;
-				setOperatorStats({ rutasAsignadas: 0, alertasPendientes: 0, tareasHoy: 0 });
+				setOperatorStats({ rutasAsignadas: 0, tareasHoy: 0 });
 			})
 			.finally(() => {
 				if (mounted) setOperatorStatsLoading(false);
@@ -82,8 +73,7 @@ export default function Dashboard() {
 	const operarioCards = useMemo(
 		() => [
 			{ label: 'Rutas asignadas', value: String(operatorStats.rutasAsignadas), note: 'Rutas vinculadas a tu usuario' },
-			{ label: 'Alertas pendientes', value: String(operatorStats.alertasPendientes), note: 'Alertas abiertas en tu ámbito' },
-			{ label: 'Tareas de hoy', value: String(operatorStats.tareasHoy), note: 'Rutas activas y alertas por atender' }
+			{ label: 'Tareas de hoy', value: String(operatorStats.tareasHoy), note: 'Rutas activas por atender' }
 		],
 		[operatorStats]
 	);
@@ -122,7 +112,7 @@ export default function Dashboard() {
 			{isOperario ? (
 				<>
 					{operatorStatsLoading ? <p>Cargando métricas del operador...</p> : null}
-					<div className="stats-grid">
+					<div className="stats-grid" style={{ gridTemplateColumns: 'repeat(2, minmax(0, 1fr))' }}>
 						{operarioCards.map((item) => (
 							<article className="metric-card" key={item.label}>
 								<span>{item.label}</span>
@@ -131,27 +121,26 @@ export default function Dashboard() {
 							</article>
 						))}
 					</div>
-					<div className="panel-grid">
-						<article className="page-panel">
-							<div className="section-heading compact">
-								<p className="eyebrow">Operador</p>
-								<h3>Acciones permitidas</h3>
+					<div className="panel-grid" style={{ gridTemplateColumns: '1fr' }}>
+							<article className="page-panel accent-panel" style={{ display: 'flex', flexDirection: 'column' }}>
+						<div className="section-heading compact">
+								<p className="eyebrow">Contexto territorial</p>
+								<h3>Mapa de Cusco y Rutas de Recolección</h3>
 							</div>
-							<div className="timeline-list">
-								{operarioActions.map((item) => (
-									<div className="timeline-item" key={item}>
-										<span className="timeline-dot" />
-										<p>{item}</p>
-									</div>
-								))}
+							<p style={{ marginBottom: '16px' }}>Visualiza tu ubicación y las rutas asignadas para el día de hoy en tiempo real.</p>
+							<div className="map-container" style={{ width: '100%', height: '520px', borderRadius: '20px', overflow: 'hidden', border: '1px solid rgba(255, 255, 255, 0.2)', boxShadow: 'inset 0 2px 8px rgba(0,0,0,0.2)' }}>
+								<iframe
+									title="Mapa de Cusco"
+									width="100%"
+									height="100%"
+									frameBorder="0"
+									scrolling="no"
+									marginHeight="0"
+									marginWidth="0"
+									src="https://www.openstreetmap.org/export/embed.html?bbox=-71.995%2C-13.525%2C-71.965%2C-13.505&amp;layer=mapnik"
+									style={{ filter: 'invert(90%) hue-rotate(180deg) brightness(95%) contrast(90%)', border: 'none', display: 'block' }}
+								/>
 							</div>
-						</article>
-						<article className="page-panel accent-panel">
-							<div className="section-heading compact">
-								<p className="eyebrow">Contexto</p>
-								<h3>Tu labor diaria</h3>
-							</div>
-							<p>Revisa tus rutas, informa incidencias y registra alertas cuando encuentres problemas en la recolección.</p>
 						</article>
 					</div>
 				</>

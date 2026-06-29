@@ -136,7 +136,7 @@ export default function AppRouter() {
 				<Route
 					path="/alertas"
 					element={
-						<RoleRoute allowedRoles={['admin', 'supervisor', 'operador']}>
+						<RoleRoute allowedRoles={['admin', 'supervisor']}>
 							<Alertas />
 						</RoleRoute>
 					}

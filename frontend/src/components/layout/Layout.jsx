@@ -7,7 +7,7 @@ const menuItems = [
 	{ to: '/zonas', label: 'Zonas', roles: ['admin', 'supervisor'] },
 	{ to: '/residuos', label: 'Residuos', roles: ['admin', 'supervisor'] },
 	{ to: '/rutas', label: 'Rutas', roles: ['admin', 'supervisor', 'operador'] },
-	{ to: '/alertas', label: 'Alertas', roles: ['admin', 'supervisor', 'operador'] },
+	{ to: '/alertas', label: 'Alertas', roles: ['admin', 'supervisor'] },
 	{ to: '/reportes', label: 'Reportes', roles: ['admin', 'supervisor'] }
 ];
 
@@ -18,9 +18,6 @@ export default function Layout() {
 		.map((item) => {
 			if (user?.role === 'operador' && item.to === '/rutas') {
 				return { ...item, label: 'Mis rutas' };
-			}
-			if (user?.role === 'operador' && item.to === '/alertas') {
-				return { ...item, label: 'Mis alertas' };
 			}
 			return item;
 		});

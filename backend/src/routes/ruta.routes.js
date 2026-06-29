@@ -18,7 +18,7 @@ router.use(authMiddleware);
 router.get('/', controller.index);
 router.get('/:id', controller.show);
 router.post('/', requireRole('admin', 'supervisor'), controller.store);
-router.put('/:id', requireRole('admin', 'supervisor'), controller.update);
+router.put('/:id', requireRole('admin', 'supervisor', 'operador'), controller.update);
 router.delete('/:id', requireRole('admin', 'supervisor'), controller.destroy);
 
 module.exports = router;
