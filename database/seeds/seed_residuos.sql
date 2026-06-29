@@ -10,11 +10,11 @@ LIMIT 1;
 INSERT INTO residuos (tipo_id, descripcion, peso, zona_id, usuario_id)
 SELECT t.id, 'Cartones y plásticos de zona comercial', 200.00, z.id, u.id
 FROM tipos_residuos t, zonas z, usuarios u
-WHERE t.nombre = 'Reciclable' AND z.nombre = 'Wanchaq' AND u.email = 'operador2@cuscolimpio.local'
+WHERE t.nombre = 'Reciclable' AND z.nombre = 'San Blas' AND u.email = 'operador2@cuscolimpio.local'
 LIMIT 1;
 
 INSERT INTO residuos (tipo_id, descripcion, peso, zona_id, usuario_id)
 SELECT t.id, 'Residuos domiciliarios mezclados', 85.20, z.id, u.id
 FROM tipos_residuos t, zonas z, usuarios u
-WHERE t.nombre = 'No_Reciclable' AND z.nombre = 'San Sebastián' AND u.email = 'operador1@cuscolimpio.local'
+WHERE t.nombre = 'No_Reciclable' AND z.nombre = 'San Cristóbal' AND u.email = 'operador3@cuscolimpio.local'
 LIMIT 1;

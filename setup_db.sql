@@ -5,12 +5,14 @@ GRANT ALL PRIVILEGES ON cusco_limpio.* TO 'cusco_app'@'localhost';
 FLUSH PRIVILEGES;
 
 USE cusco_limpio;
+
+-- Cargar la estructura completa actualizada
 SOURCE database/schema.sql;
-SOURCE database/migrations/001_crear_usuarios.sql;
-SOURCE database/migrations/002_crear_zonas.sql;
-SOURCE database/migrations/003_crear_residuos.sql;
-SOURCE database/migrations/004_crear_rutas.sql;
-SOURCE database/migrations/005_crear_alertas.sql;
-SOURCE database/migrations/006_crear_reportes.sql;
+
+-- Cargar todos los datos de prueba (seeds) de Cusco
 SOURCE database/seeds/seed_zonas.sql;
 SOURCE database/seeds/seed_tipos_residuos.sql;
+SOURCE database/seeds/seed_rutas.sql;
+SOURCE database/seeds/seed_alertas.sql;
+SOURCE database/seeds/seed_residuos.sql;
+

@@ -14,5 +14,5 @@ SELECT 'Camión Averiado', 'Falla mecánica en el compactador', z.id, r.id, u.id
 FROM rutas r
 JOIN zonas z ON r.zona_id = z.id
 JOIN usuarios u ON u.email = 'operador2@cuscolimpio.local'
-WHERE z.nombre = 'Wanchaq'
+WHERE z.nombre = 'San Blas'
 LIMIT 1;
