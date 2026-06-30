@@ -17,7 +17,6 @@ export default function Alertas() {
 	const canManageAlerts = !isOperator;
 	const [items, setItems] = useState([]);
 	const [rutas, setRutas] = useState([]);
-	const [usuarios, setUsuarios] = useState([]);
 	const [form, setForm] = useState(initialForm);
 	const [editingId, setEditingId] = useState(null);
 	const [loading, setLoading] = useState(true);
@@ -30,15 +29,13 @@ export default function Alertas() {
 		setLoading(true);
 		setError('');
 		try {
-			const [alerts, routeList, userList, operatorRoutes] = await Promise.all([
+			const [alerts, routeList, operatorRoutes] = await Promise.all([
 				alertaApi.listAlerts(),
 				canManageAlerts ? rutaApi.listRoutes() : Promise.resolve([]),
-				canManageAlerts ? usuarioApi.listUsers() : Promise.resolve([]),
 				isOperator ? rutaApi.listRoutes() : Promise.resolve([])
 			]);
 			setItems(alerts);
 			setRutas(routeList);
-			setUsuarios(userList);
 			if (isOperator && user?.id) {
 				const ids = operatorRoutes
 					.filter((route) => Number(route.operario_id) === Number(user.id))
@@ -89,7 +86,7 @@ export default function Alertas() {
 				descripcion: form.descripcion,
 				zona_id: null,
 				ruta_id: form.ruta_id === '' ? null : Number(form.ruta_id),
-				usuario_id: form.usuario_id === '' ? null : Number(form.usuario_id)
+				usuario_id: null
 			};
 			if (editingId) {
 				await alertaApi.updateAlert(editingId, payload);
@@ -153,20 +150,21 @@ export default function Alertas() {
 							<h3>{title}</h3>
 						</div>
 						<form className="stack" onSubmit={handleSubmit}>
-							<label className="field"><span>Tipo</span><input name="tipo" value={form.tipo} onChange={handleChange} required /></label>
+							<label className="field">
+								<span>Tipo</span>
+								<select name="tipo" value={form.tipo} onChange={handleChange} required>
+									<option value="">Seleccione tipo...</option>
+									<option value="Incidencia">Incidencia</option>
+									<option value="Retraso">Retraso</option>
+									<option value="Obstrucción de vía">Obstrucción de vía</option>
+								</select>
+							</label>
 							<label className="field"><span>Descripción</span><textarea name="descripcion" rows="4" value={form.descripcion} onChange={handleChange} required /></label>
 							<label className="field">
 								<span>Ruta</span>
 								<select name="ruta_id" value={form.ruta_id} onChange={handleChange}>
 									<option value="">Sin ruta</option>
 									{rutas.map((ruta) => <option key={ruta.id} value={ruta.id}>{ruta.nombre}</option>)}
-								</select>
-							</label>
-							<label className="field">
-								<span>Usuario</span>
-								<select name="usuario_id" value={form.usuario_id} onChange={handleChange}>
-									<option value="">Sin usuario</option>
-									{usuarios.map((usuario) => <option key={usuario.id} value={usuario.id}>{usuario.nombre}</option>)}
 								</select>
 							</label>
 							{error ? <div className="form-error">{error}</div> : null}

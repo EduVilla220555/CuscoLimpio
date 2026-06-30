@@ -32,6 +32,32 @@ export default function Dashboard() {
 	const [supervisorSaving, setSupervisorSaving] = useState(false);
 	const [supervisorError, setSupervisorError] = useState('');
 	const [supervisorMessage, setSupervisorMessage] = useState('');
+	const [completedRoutes, setCompletedRoutes] = useState([]);
+	const [routesLoading, setRoutesLoading] = useState(false);
+
+	useEffect(() => {
+		if (isOperario) return;
+
+		let mounted = true;
+		setRoutesLoading(true);
+
+		rutaApi.listRoutes()
+			.then((routes) => {
+				if (!mounted) return;
+				const completed = routes.filter((route) => route.estado === 'completada');
+				setCompletedRoutes(completed);
+			})
+			.catch((err) => {
+				console.error('Error al cargar rutas completadas:', err);
+			})
+			.finally(() => {
+				if (mounted) setRoutesLoading(false);
+			});
+
+		return () => {
+			mounted = false;
+		};
+	}, [isOperario]);
 
 	useEffect(() => {
 		if (!isOperario || !user?.id) {
@@ -144,26 +170,48 @@ export default function Dashboard() {
 				<div className="panel-grid">
 					<article className="page-panel">
 						<div className="section-heading compact">
-							<p className="eyebrow">Ruta de avance</p>
-							<h3>Fases y módulos del proyecto</h3>
+							<p className="eyebrow">Operación del día</p>
+							<h3>Camiones que realizaron con éxito su ruta el día de hoy</h3>
 						</div>
-						<div className="timeline-list">
-							{roadmap.map((item) => (
-								<div className="timeline-item" key={item}>
-									<span className="timeline-dot" />
-									<p>{item}</p>
-								</div>
-							))}
-						</div>
+						{routesLoading ? (
+							<p>Cargando rutas completadas...</p>
+						) : completedRoutes.length === 0 ? (
+							<div className="empty-state" style={{ padding: '20px 0', color: 'var(--text-muted)' }}>
+								Ningún camión ha completado su ruta con éxito el día de hoy.
+							</div>
+						) : (
+							<div className="timeline-list">
+								{completedRoutes.map((route) => (
+									<div className="timeline-item" key={route.id}>
+										<span className="timeline-dot" style={{ backgroundColor: 'var(--success)' }} />
+										<div>
+											<strong>{route.nombre}</strong>
+											<p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+												Operario: {route.operario_nombre || 'Sin asignar'} | Zona: {route.zona_nombre || 'Sin zona'}
+											</p>
+										</div>
+									</div>
+								))}
+							</div>
+						)}
 					</article>
-					<article className="page-panel accent-panel">
+					<article className="page-panel accent-panel" style={{ display: 'flex', flexDirection: 'column' }}>
 						<div className="section-heading compact">
-							<p className="eyebrow">Contexto territorial</p>
-							<h3>Distrito de Cusco</h3>
+							<p className="eyebrow">Mapa de Cusco</p>
+							<h3>Monitoreo Geográfico</h3>
 						</div>
-						<p>
-							El sistema está orientado a problemas reales de recolección, segregación y trazabilidad dentro del distrito de Cusco, con foco en eficiencia operativa y comunicación ciudadana.
-						</p>
+						<div style={{ flex: 1, minHeight: '250px', borderRadius: '8px', overflow: 'hidden', marginTop: '10px' }}>
+							<iframe
+								src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d62067.81880479155!2d-71.99042571210214!3d-13.521360098007204!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x916e7f224c8b211f%3A0xa59f77f07d2c3f8c!2sCusco!5e0!3m2!1ses-419!2spe!4v1700000000000!5m2!1ses-419!2spe"
+								width="100%"
+								height="100%"
+								style={{ border: 0 }}
+								allowFullScreen=""
+								loading="lazy"
+								referrerPolicy="no-referrer-when-downgrade"
+								title="Mapa de Cusco"
+							/>
+						</div>
 					</article>
 					{isAdmin ? (
 						<article className="page-panel">

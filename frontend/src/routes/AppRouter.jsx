@@ -5,8 +5,11 @@ import Login from '../pages/auth/Login';
 import Register from '../pages/auth/Register';
 import Dashboard from '../pages/dashboard/Dashboard';
 import Usuarios from '../pages/usuarios/Usuarios';
+import Zonas from '../pages/zonas/Zonas';
+import Residuos from '../pages/residuos/Residuos';
 import Rutas from '../pages/rutas/Rutas';
 import Alertas from '../pages/alertas/Alertas';
+import Reportes from '../pages/reportes/Reportes';
 
 function LoadingScreen() {
 	return <div className="loading-screen">Cargando CuscoLimpio...</div>;
@@ -107,6 +110,22 @@ export default function AppRouter() {
 					}
 				/>
 				<Route
+					path="/zonas"
+					element={
+						<RoleRoute allowedRoles={['admin']}>
+							<Zonas />
+						</RoleRoute>
+					}
+				/>
+				<Route
+					path="/residuos"
+					element={
+						<RoleRoute allowedRoles={['admin']}>
+							<Residuos />
+						</RoleRoute>
+					}
+				/>
+				<Route
 					path="/rutas"
 					element={
 						<RoleRoute allowedRoles={['admin', 'supervisor', 'operador']}>
@@ -117,8 +136,16 @@ export default function AppRouter() {
 				<Route
 					path="/alertas"
 					element={
-						<RoleRoute allowedRoles={['admin', 'supervisor']}>
+						<RoleRoute allowedRoles={['admin', 'supervisor', 'operador']}>
 							<Alertas />
+						</RoleRoute>
+					}
+				/>
+				<Route
+					path="/reportes"
+					element={
+						<RoleRoute allowedRoles={['admin']}>
+							<Reportes />
 						</RoleRoute>
 					}
 				/>
