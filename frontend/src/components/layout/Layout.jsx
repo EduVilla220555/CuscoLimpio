@@ -4,11 +4,8 @@ import useAuth from '../../hooks/useAuth';
 const menuItems = [
 	{ to: '/dashboard', label: 'Resumen', roles: ['admin', 'supervisor', 'operador'] },
 	{ to: '/usuarios', label: 'Usuarios', roles: ['admin'] },
-	{ to: '/zonas', label: 'Zonas', roles: ['admin', 'supervisor'] },
-	{ to: '/residuos', label: 'Residuos', roles: ['admin', 'supervisor'] },
 	{ to: '/rutas', label: 'Rutas', roles: ['admin', 'supervisor', 'operador'] },
-	{ to: '/alertas', label: 'Alertas', roles: ['admin', 'supervisor'] },
-	{ to: '/reportes', label: 'Reportes', roles: ['admin', 'supervisor'] }
+	{ to: '/alertas', label: 'Alertas', roles: ['admin', 'supervisor'] }
 ];
 
 export default function Layout() {

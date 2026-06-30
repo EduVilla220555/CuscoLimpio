@@ -1,12 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import rutaApi from '../../api/ruta.api';
-import zonaApi from '../../api/zona.api';
 import usuarioApi from '../../api/usuario.api';
 import useAuth from '../../hooks/useAuth';
 
 const initialForm = {
 	nombre: '',
-	zona_id: '',
 	operario_id: '',
 	fecha_inicio: '',
 	fecha_fin: '',
@@ -124,7 +122,6 @@ export default function Rutas() {
 	const isOperator = user?.role === 'operador';
 	const canManageRoutes = !isOperator;
 	const [items, setItems] = useState([]);
-	const [zonas, setZonas] = useState([]);
 	const [usuarios, setUsuarios] = useState([]);
 	const [form, setForm] = useState(initialForm);
 	const [editingId, setEditingId] = useState(null);
@@ -145,14 +142,12 @@ export default function Rutas() {
 		setLoading(true);
 		setError('');
 		try {
-			const [routes, zoneList, userList] = await Promise.all([
+			const [routes, userList] = await Promise.all([
 				rutaApi.listRoutes(),
-				canManageRoutes ? zonaApi.listZones() : Promise.resolve([]),
 				canManageRoutes ? usuarioApi.listUsers() : Promise.resolve([])
 			]);
 			setItems(routes);
 			if (canManageRoutes) {
-				setZonas(zoneList);
 				setUsuarios(userList.filter((usuario) => usuario.role === 'operador' || usuario.role === 'supervisor' || usuario.role === 'admin'));
 			}
 		} catch (err) {
@@ -391,7 +386,6 @@ export default function Rutas() {
 		setEditingId(item.id);
 		setForm({
 			nombre: item.nombre || '',
-			zona_id: item.zona_id ?? '',
 			operario_id: item.operario_id ?? '',
 			fecha_inicio: item.fecha_inicio || '',
 			fecha_fin: item.fecha_fin || '',
@@ -414,7 +408,7 @@ export default function Rutas() {
 		try {
 			const payload = {
 				nombre: form.nombre,
-				zona_id: form.zona_id === '' ? null : Number(form.zona_id),
+				zona_id: null,
 				operario_id: form.operario_id === '' ? null : Number(form.operario_id),
 				fecha_inicio: form.fecha_inicio || null,
 				fecha_fin: form.fecha_fin || null,
@@ -527,7 +521,7 @@ export default function Rutas() {
 									<article className="page-panel" style={{ padding: '24px' }}>
 										<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '12px', marginBottom: '18px' }}>
 											<div>
-												<p className="eyebrow" style={{ marginBottom: '4px' }}>{route.zona_nombre || 'Sin Zona'}</p>
+												<p className="eyebrow" style={{ marginBottom: '4px' }}>Distrito de Cusco, Provincia de Cusco</p>
 												<h3 style={{ margin: 0 }}>{route.nombre}</h3>
 											</div>
 											{route.estado !== 'completada' ? (
@@ -609,14 +603,7 @@ export default function Rutas() {
 							<h3>{title}</h3>
 						</div>
 						<form className="stack" onSubmit={handleSubmit}>
-							<label className="field"><span>Nombre</span><input name="nombre" value={form.nombre} onChange={handleChange} required /></label>
-							<label className="field">
-								<span>Zona</span>
-								<select name="zona_id" value={form.zona_id} onChange={handleChange}>
-									<option value="">Sin zona</option>
-									{zonas.map((zona) => <option key={zona.id} value={zona.id}>{zona.nombre}</option>)}
-								</select>
-							</label>
+							<label className="field"><span>Nombre de Ruta (Distrito de Cusco)</span><input name="nombre" value={form.nombre} onChange={handleChange} required placeholder="Ej. Ruta Centro Histórico" /></label>
 							<label className="field">
 								<span>Operador</span>
 								<select name="operario_id" value={form.operario_id} onChange={handleChange}>
@@ -652,8 +639,9 @@ export default function Rutas() {
 							<table className="data-table">
 								<thead>
 									<tr>
-										<th>Nombre</th>
-										<th>Zona</th>
+										<th>Nombre de Ruta</th>
+										<th>Distrito</th>
+										<th>Fechas</th>
 										<th>Estado</th>
 										{isOperator ? <th></th> : null}
 										{canManageRoutes ? <th>Operador</th> : null}
@@ -672,7 +660,12 @@ export default function Rutas() {
 											onClick={() => isOperator && setSelectedRouteId(item.id === selectedRouteId ? null : item.id)}
 										>
 											<td style={{ fontWeight: selectedRouteId === item.id ? 'bold' : 'normal' }}>{item.nombre}</td>
-											<td>{item.zona_nombre || '-'}</td>
+											<td><span style={{ padding: '4px 8px', borderRadius: '4px', fontSize: '0.75rem', background: 'rgba(0,0,0,0.05)', color: 'var(--muted)' }}>Cusco, Cusco</span></td>
+											<td style={{ fontSize: '0.85rem' }}>
+												{item.fecha_inicio ? new Date(item.fecha_inicio).toLocaleDateString() : '-'} 
+												<br />a<br /> 
+												{item.fecha_fin ? new Date(item.fecha_fin).toLocaleDateString() : '-'}
+											</td>
 											<td>
 												<span style={{ 
 													padding: '4px 8px', 

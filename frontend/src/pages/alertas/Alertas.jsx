@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
 import alertaApi from '../../api/alerta.api';
-import zonaApi from '../../api/zona.api';
 import rutaApi from '../../api/ruta.api';
 import usuarioApi from '../../api/usuario.api';
 import useAuth from '../../hooks/useAuth';
@@ -8,7 +7,6 @@ import useAuth from '../../hooks/useAuth';
 const initialForm = {
 	tipo: '',
 	descripcion: '',
-	zona_id: '',
 	ruta_id: '',
 	usuario_id: ''
 };
@@ -18,7 +16,6 @@ export default function Alertas() {
 	const isOperator = user?.role === 'operador';
 	const canManageAlerts = !isOperator;
 	const [items, setItems] = useState([]);
-	const [zonas, setZonas] = useState([]);
 	const [rutas, setRutas] = useState([]);
 	const [usuarios, setUsuarios] = useState([]);
 	const [form, setForm] = useState(initialForm);
@@ -33,15 +30,13 @@ export default function Alertas() {
 		setLoading(true);
 		setError('');
 		try {
-			const [alerts, zoneList, routeList, userList, operatorRoutes] = await Promise.all([
+			const [alerts, routeList, userList, operatorRoutes] = await Promise.all([
 				alertaApi.listAlerts(),
-				canManageAlerts ? zonaApi.listZones() : Promise.resolve([]),
 				canManageAlerts ? rutaApi.listRoutes() : Promise.resolve([]),
 				canManageAlerts ? usuarioApi.listUsers() : Promise.resolve([]),
 				isOperator ? rutaApi.listRoutes() : Promise.resolve([])
 			]);
 			setItems(alerts);
-			setZonas(zoneList);
 			setRutas(routeList);
 			setUsuarios(userList);
 			if (isOperator && user?.id) {
@@ -71,7 +66,6 @@ export default function Alertas() {
 		setForm({
 			tipo: item.tipo || '',
 			descripcion: item.descripcion || '',
-			zona_id: item.zona_id ?? '',
 			ruta_id: item.ruta_id ?? '',
 			usuario_id: item.usuario_id ?? ''
 		});
@@ -93,7 +87,7 @@ export default function Alertas() {
 			const payload = {
 				tipo: form.tipo,
 				descripcion: form.descripcion,
-				zona_id: form.zona_id === '' ? null : Number(form.zona_id),
+				zona_id: null,
 				ruta_id: form.ruta_id === '' ? null : Number(form.ruta_id),
 				usuario_id: form.usuario_id === '' ? null : Number(form.usuario_id)
 			};
@@ -162,13 +156,6 @@ export default function Alertas() {
 							<label className="field"><span>Tipo</span><input name="tipo" value={form.tipo} onChange={handleChange} required /></label>
 							<label className="field"><span>Descripción</span><textarea name="descripcion" rows="4" value={form.descripcion} onChange={handleChange} required /></label>
 							<label className="field">
-								<span>Zona</span>
-								<select name="zona_id" value={form.zona_id} onChange={handleChange}>
-									<option value="">Sin zona</option>
-									{zonas.map((zona) => <option key={zona.id} value={zona.id}>{zona.nombre}</option>)}
-								</select>
-							</label>
-							<label className="field">
 								<span>Ruta</span>
 								<select name="ruta_id" value={form.ruta_id} onChange={handleChange}>
 									<option value="">Sin ruta</option>
@@ -210,7 +197,7 @@ export default function Alertas() {
 								<thead>
 									<tr>
 										<th>Tipo</th>
-										<th>Zona</th>
+										<th>Distrito</th>
 										<th>Ruta</th>
 										<th>Estado</th>
 										{canManageAlerts ? <th>Acciones</th> : null}
@@ -220,7 +207,7 @@ export default function Alertas() {
 									{visibleItems.map((item) => (
 										<tr key={item.id}>
 											<td>{item.tipo}</td>
-											<td>{item.zona_nombre || '-'}</td>
+											<td><span style={{ padding: '4px 8px', borderRadius: '4px', fontSize: '0.75rem', background: 'rgba(0,0,0,0.05)', color: 'var(--muted)' }}>Cusco, Cusco</span></td>
 											<td>{item.ruta_nombre || '-'}</td>
 											<td>{item.estado}</td>
 											{canManageAlerts ? (

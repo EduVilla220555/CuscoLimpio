@@ -33,24 +33,11 @@ export default function Login() {
 		<div className="auth-layout">
 			<section className="auth-hero">
 				<div className="hero-badge">CuscoLimpio</div>
-				<h1>Sistema inteligente para la recolección de residuos en Cusco</h1>
+				<h1>Plataforma de monitoreo y gestión de rutas de limpieza en Cusco</h1>
 				<p>
-					Control de zonas, rutas, alertas y reportes con un panel pensado para crecer por fases sin perder trazabilidad.
+					Control de rutas, alertas y seguimiento en tiempo real con un enfoque exclusivo en el Distrito de Cusco.
 				</p>
-				<div className="hero-metrics">
-					<div>
-						<strong>6</strong>
-						<span>módulos base</span>
-					</div>
-					<div>
-						<strong>SCRUM</strong>
-						<span>entregables por sprint</span>
-					</div>
-					<div>
-						<strong>Cusco</strong>
-						<span>enfoque territorial</span>
-					</div>
-				</div>
+
 			</section>
 			<section className="auth-card">
 				<div className="section-heading compact">

@@ -86,9 +86,10 @@ select {
 	padding: 36px;
 	border-radius: var(--radius-xl);
 	background:
-		linear-gradient(145deg, rgba(15, 94, 79, 0.94), rgba(10, 40, 34, 0.94)),
-		radial-gradient(circle at top right, rgba(255, 255, 255, 0.18), transparent 30%);
+		linear-gradient(145deg, rgba(15, 94, 79, 0.85), rgba(10, 40, 34, 0.90)),
+		url('/cusco-bg.jpg') center/cover no-repeat;
 	color: white;
+	box-shadow: inset 0 0 100px rgba(0,0,0,0.5);
 }
 
 .register-layout .auth-hero {

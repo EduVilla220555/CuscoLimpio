@@ -5,19 +5,15 @@ import rutaApi from '../../api/ruta.api';
 import alertaApi from '../../api/alerta.api';
 
 const stats = [
-	{ label: 'Zonas planificadas', value: '8', note: 'Cobertura del distrito de Cusco' },
-	{ label: 'Rutas monitoreadas', value: '12', note: 'Seguimiento de camiones y operarios' },
-	{ label: 'Alertas abiertas', value: '3', note: 'Incidencias y notificaciones pendientes' },
-	{ label: 'Reportes generados', value: '24', note: 'Por zona y tipo de residuo' }
+	{ label: 'Rutas monitoreadas', value: '12', note: 'Seguimiento de camiones y operarios en Cusco' },
+	{ label: 'Alertas abiertas', value: '3', note: 'Incidencias y notificaciones pendientes' }
 ];
 
 const roadmap = [
-	'Módulo 1: Gestión de usuarios y zonas',
-	'Módulo 2: Gestión de residuos',
-	'Módulo 3: Monitoreo de rutas',
-	'Módulo 4: Aplicación móvil',
-	'Módulo 5: Sistema de alertas',
-	'Módulo 6: Reportes y analítica'
+	'Módulo 1: Gestión de usuarios',
+	'Módulo 2: Monitoreo de rutas',
+	'Módulo 3: Sistema de alertas',
+	'Módulo 4: Aplicación móvil (Próximamente)'
 ];
 
 const operarioActions = [
