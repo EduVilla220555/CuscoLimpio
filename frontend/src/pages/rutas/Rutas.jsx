@@ -20,78 +20,78 @@ const states = [
 
 // Route stops only — OSRM will compute the actual road-following path at runtime
 const ROUTE_WAYPOINTS = {
-	'Ruta Histórica Plaza': {
+	'Ruta Centro Monumental (Madrugada)': {
 		stops: [
 			{ latlng: [-13.5163, -71.9779], name: 'Plaza de Armas' },
-			{ latlng: [-13.5172, -71.9773], name: 'Calle Loreto' },
-			{ latlng: [-13.5193, -71.9767], name: 'Av. El Sol - Calle Loreto' },
-			{ latlng: [-13.5191, -71.9790], name: 'Calle Maruri' },
+			{ latlng: [-13.5161, -71.9775], name: 'Portal de Panes' },
+			{ latlng: [-13.5158, -71.9780], name: 'Portal de Carnes' },
+			{ latlng: [-13.5172, -71.9773], name: 'Loreto' },
+			{ latlng: [-13.5170, -71.9760], name: 'Santa Catalina' }
 		]
 	},
-	'Ruta San Cristóbal Alta': {
+	'Ruta San Cristóbal - Saphy (Mañana)': {
 		stops: [
-			{ latlng: [-13.5148, -71.9816], name: 'Resbalosa (inicio)' },
 			{ latlng: [-13.5124, -71.9816], name: 'Pumacurco' },
-			{ latlng: [-13.5115, -71.9828], name: 'Iglesia San Cristóbal' },
-			{ latlng: [-13.5138, -71.9830], name: 'Bajada Don Bosco' },
+			{ latlng: [-13.5138, -71.9830], name: 'Don Bosco' },
+			{ latlng: [-13.5148, -71.9816], name: 'Resbalosa' },
+			{ latlng: [-13.5153, -71.9792], name: 'Saphy' }
 		]
 	},
-	'Ruta Santa Ana Baja': {
+	'Ruta Comercial Mercado San Pedro': {
 		stops: [
-			{ latlng: [-13.5198, -71.9847], name: 'Mercado San Pedro' },
-			{ latlng: [-13.5219, -71.9870], name: 'Cuesta Santa Ana' },
-			{ latlng: [-13.5235, -71.9865], name: 'Calle Meloc' },
-			{ latlng: [-13.5215, -71.9840], name: 'Calle Arco' },
+			{ latlng: [-13.5200, -71.9830], name: 'Cascaparo' },
+			{ latlng: [-13.5175, -71.9800], name: 'Santa Clara' },
+			{ latlng: [-13.5220, -71.9860], name: 'Hospital' },
+			{ latlng: [-13.5240, -71.9850], name: 'Tupac Amaru' }
 		]
 	},
-	'Ruta San Blas Artistas': {
+	'Ruta San Blas (Tarde)': {
 		stops: [
-			{ latlng: [-13.5163, -71.9776], name: 'Plaza de Armas NE' },
-			{ latlng: [-13.5148, -71.9757], name: 'Cuesta San Blas' },
-			{ latlng: [-13.5136, -71.9741], name: 'Plazoleta San Blas' },
 			{ latlng: [-13.5120, -71.9720], name: 'Carmen Alto' },
+			{ latlng: [-13.5110, -71.9730], name: 'Tandapata' },
+			{ latlng: [-13.5130, -71.9750], name: 'Suytuqhatu' },
+			{ latlng: [-13.5140, -71.9760], name: 'Choquechaca' }
 		]
 	},
-	'Ruta Centro Comercial': {
+	'Ruta Santa Ana y Arcopata': {
 		stops: [
-			{ latlng: [-13.5197, -71.9817], name: 'Mercado San Pedro' },
-			{ latlng: [-13.5193, -71.9790], name: 'Calle Maruri' },
-			{ latlng: [-13.5193, -71.9765], name: 'Calle Maruri - El Sol' },
-			{ latlng: [-13.5209, -71.9756], name: 'Av. El Sol Central' },
+			{ latlng: [-13.5219, -71.9870], name: 'Cuesta de Santa Ana' },
+			{ latlng: [-13.5235, -71.9865], name: 'Calle Meloc' },
+			{ latlng: [-13.5250, -71.9830], name: 'Calle Abancay' },
+			{ latlng: [-13.5220, -71.9858], name: 'Arcopata' }
 		]
 	},
-	'Ruta Santa Ana Residencial': {
+	'Ruta Lucrepata - Recoleta': {
 		stops: [
-			{ latlng: [-13.5197, -71.9817], name: 'Mercado San Pedro' },
-			{ latlng: [-13.5220, -71.9858], name: 'Arcopata' },
-			{ latlng: [-13.5238, -71.9877], name: 'Santa Ana Alta' },
-			{ latlng: [-13.5248, -71.9862], name: 'Calle Kiskapata' },
+			{ latlng: [-13.5150, -71.9700], name: 'Av. Lucrepata' },
+			{ latlng: [-13.5170, -71.9720], name: 'Calle Recoleta' },
+			{ latlng: [-13.5190, -71.9710], name: 'Pampa de la Alianza' }
 		]
 	},
-	'Ruta Mirador Cristóbal': {
+	'Ruta Comercial Av. El Sol': {
 		stops: [
-			{ latlng: [-13.5153, -71.9792], name: 'Calle Saphi' },
-			{ latlng: [-13.5133, -71.9810], name: 'Camino a San Cristóbal' },
-			{ latlng: [-13.5115, -71.9828], name: 'Mirador San Cristóbal' },
-			{ latlng: [-13.5138, -71.9830], name: 'Retorno Don Bosco' },
+			{ latlng: [-13.5193, -71.9767], name: 'Av. El Sol' },
+			{ latlng: [-13.5210, -71.9750], name: 'Santo Domingo' },
+			{ latlng: [-13.5180, -71.9740], name: 'Pampa del Castillo' },
+			{ latlng: [-13.5170, -71.9730], name: 'Arrayan' },
+			{ latlng: [-13.5230, -71.9710], name: 'Av. Tullumayo' }
 		]
 	},
-	'Ruta Plazoleta San Blas': {
+	'Ruta Centro Periférica (Noche)': {
 		stops: [
-			{ latlng: [-13.5155, -71.9769], name: 'Calle Triunfo' },
-			{ latlng: [-13.5148, -71.9757], name: 'Cuesta San Blas' },
-			{ latlng: [-13.5136, -71.9741], name: 'Plazoleta San Blas' },
-			{ latlng: [-13.5148, -71.9757], name: 'Regreso Cuesta San Blas' },
+			{ latlng: [-13.5150, -71.9780], name: 'Cuesta del Almirante' },
+			{ latlng: [-13.5140, -71.9770], name: 'Plazoleta Nazarenas' },
+			{ latlng: [-13.5130, -71.9760], name: 'Purgatorio' },
+			{ latlng: [-13.5125, -71.9755], name: 'Ataud' }
 		]
 	},
-	'Ruta Histórica Nocturna': {
+	'Ruta Repaso San Pedro - Cascaparo': {
 		stops: [
-			{ latlng: [-13.5163, -71.9779], name: 'Plaza de Armas' },
-			{ latlng: [-13.5153, -71.9792], name: 'Calle Saphi' },
-			{ latlng: [-13.5175, -71.9800], name: 'Calle Santa Clara' },
-			{ latlng: [-13.5191, -71.9790], name: 'Calle Maruri' },
+			{ latlng: [-13.5200, -71.9830], name: 'Cascaparo (repaso)' },
+			{ latlng: [-13.5175, -71.9800], name: 'Santa Clara' },
+			{ latlng: [-13.5220, -71.9860], name: 'Hospital' }
 		]
-	},
+	}
 };
 
 // Fetch road-following path from OSRM public API (no API key needed)
@@ -195,7 +195,9 @@ export default function Rutas() {
 		if (!route) return [];
 
 		let streets = [];
-		if (route.zona_nombre === 'Centro Histórico') {
+		if (route.lugares_recorrido) {
+			streets = route.lugares_recorrido.split(',').map((s) => s.trim()).filter(Boolean);
+		} else if (route.zona_nombre === 'Centro Histórico') {
 			streets = ['Plaza de Armas', 'Calle Loreto', 'Calle Saphi', 'Calle Triunfo'];
 		} else if (route.zona_nombre === 'San Blas') {
 			streets = ['Carmen Alto', 'Tandapata', 'Siete Culebras', 'Cuesta de San Blas'];
@@ -218,7 +220,7 @@ export default function Rutas() {
 				title: idx === 0 ? 'Inicio de Ruta' : idx === streets.length - 1 ? 'Punto Final' : `Punto de Control ${idx}`,
 				description: street,
 				time: time,
-				completed: route.estado === 'completada' || (route.estado === 'en_progreso' && idx < 2)
+				completed: route.estado === 'completada' || idx < (route.puntos_completados || 0)
 			};
 		});
 	}, [selectedRouteId, visibleItems]);
@@ -446,15 +448,35 @@ export default function Rutas() {
 		}
 	}
 
-	async function handleMarkAsCompleted(routeId) {
+	async function handleAdvancePoint(route) {
 		setError('');
 		setMessage('');
 		try {
-			await rutaApi.updateRoute(routeId, { estado: 'completada' });
-			setMessage('Ruta completada correctamente');
+			let streets = [];
+			if (route.lugares_recorrido) {
+				streets = route.lugares_recorrido.split(',').map((s) => s.trim()).filter(Boolean);
+			} else {
+				streets = ['Punto de Inicio', 'Sector A', 'Sector B', 'Punto de Descarga'];
+			}
+			const currentPoints = route.puntos_completados || 0;
+			const nextPoints = currentPoints + 1;
+			
+			const payload = { puntos_completados: nextPoints };
+			if (route.estado === 'pendiente') {
+				payload.estado = 'en_progreso';
+			}
+			
+			if (nextPoints >= streets.length) {
+				payload.estado = 'completada';
+				setMessage('¡Ruta completada correctamente!');
+			} else {
+				setMessage('Punto de control avanzado');
+			}
+
+			await rutaApi.updateRoute(route.id, payload);
 			await loadData();
 		} catch (err) {
-			setError(err?.response?.data?.message || 'No se pudo completar la ruta');
+			setError(err?.response?.data?.message || 'No se pudo avanzar el punto de control');
 		}
 	}
 
@@ -531,10 +553,10 @@ export default function Rutas() {
 												<button 
 													className="primary-button" 
 													type="button" 
-													onClick={() => handleMarkAsCompleted(route.id)}
+													onClick={() => handleAdvancePoint(route)}
 													style={{ padding: '10px 18px', fontSize: '0.9rem' }}
 												>
-													Marcar como completada
+													Avanzar punto de control
 												</button>
 											) : (
 												<span style={{ 

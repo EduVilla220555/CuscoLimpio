@@ -2,7 +2,7 @@ const pool = require('../config/db');
 
 async function listRoutes() {
 	const [rows] = await pool.execute(
-		`SELECT r.id, r.nombre, r.lugares_recorrido, r.zona_id, z.nombre AS zona_nombre, r.operario_id, u.nombre AS operario_nombre, r.fecha_inicio, r.fecha_fin, r.estado, r.created_at
+		`SELECT r.id, r.nombre, r.lugares_recorrido, r.zona_id, z.nombre AS zona_nombre, r.operario_id, u.nombre AS operario_nombre, r.fecha_inicio, r.fecha_fin, r.estado, r.puntos_completados, r.created_at
 		 FROM rutas r
 		 LEFT JOIN zonas z ON z.id = r.zona_id
 		 LEFT JOIN usuarios u ON u.id = r.operario_id
@@ -13,7 +13,7 @@ async function listRoutes() {
 
 async function getRouteById(id) {
 	const [rows] = await pool.execute(
-		`SELECT r.id, r.nombre, r.lugares_recorrido, r.zona_id, z.nombre AS zona_nombre, r.operario_id, u.nombre AS operario_nombre, r.fecha_inicio, r.fecha_fin, r.estado, r.created_at
+		`SELECT r.id, r.nombre, r.lugares_recorrido, r.zona_id, z.nombre AS zona_nombre, r.operario_id, u.nombre AS operario_nombre, r.fecha_inicio, r.fecha_fin, r.estado, r.puntos_completados, r.created_at
 		 FROM rutas r
 		 LEFT JOIN zonas z ON z.id = r.zona_id
 		 LEFT JOIN usuarios u ON u.id = r.operario_id
@@ -31,7 +31,7 @@ async function createRoute({ nombre, lugares_recorrido = null, zona_id = null, o
 	return getRouteById(result.insertId);
 }
 
-async function updateRoute(id, { nombre, lugares_recorrido, zona_id, operario_id, fecha_inicio, fecha_fin, estado }) {
+async function updateRoute(id, { nombre, lugares_recorrido, zona_id, operario_id, fecha_inicio, fecha_fin, estado, puntos_completados }) {
 	const fields = [];
 	const values = [];
 
@@ -62,6 +62,10 @@ async function updateRoute(id, { nombre, lugares_recorrido, zona_id, operario_id
 	if (estado !== undefined) {
 		fields.push('estado = ?');
 		values.push(estado);
+	}
+	if (puntos_completados !== undefined) {
+		fields.push('puntos_completados = ?');
+		values.push(puntos_completados);
 	}
 
 	if (fields.length === 0) {

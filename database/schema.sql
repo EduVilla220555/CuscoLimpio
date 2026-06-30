@@ -57,6 +57,7 @@ CREATE TABLE IF NOT EXISTS rutas (
 	fecha_inicio DATE,
 	fecha_fin DATE,
 	estado ENUM('pendiente','en_progreso','completada') DEFAULT 'pendiente',
+	puntos_completados INT DEFAULT 0,
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	FOREIGN KEY (zona_id) REFERENCES zonas(id) ON DELETE SET NULL,
 	FOREIGN KEY (operario_id) REFERENCES usuarios(id) ON DELETE SET NULL
