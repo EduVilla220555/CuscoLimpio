@@ -28,10 +28,7 @@ export default function Dashboard() {
 	const isOperario = user?.role === 'operador';
 	const [operatorStats, setOperatorStats] = useState({ rutasAsignadas: 0, tareasHoy: 0 });
 	const [operatorStatsLoading, setOperatorStatsLoading] = useState(false);
-	const [supervisorForm, setSupervisorForm] = useState({ nombre: '', email: '', password: '' });
-	const [supervisorSaving, setSupervisorSaving] = useState(false);
-	const [supervisorError, setSupervisorError] = useState('');
-	const [supervisorMessage, setSupervisorMessage] = useState('');
+
 	const [completedRoutes, setCompletedRoutes] = useState([]);
 	const [routesLoading, setRoutesLoading] = useState(false);
 
@@ -100,27 +97,7 @@ export default function Dashboard() {
 		[operatorStats]
 	);
 
-	function handleSupervisorChange(event) {
-		const { name, value } = event.target;
-		setSupervisorForm((current) => ({ ...current, [name]: value }));
-	}
 
-	async function handleSupervisorSubmit(event) {
-		event.preventDefault();
-		setSupervisorSaving(true);
-		setSupervisorError('');
-		setSupervisorMessage('');
-
-		try {
-			await authApi.createSupervisor(supervisorForm);
-			setSupervisorMessage('Supervisor creado correctamente');
-			setSupervisorForm({ nombre: '', email: '', password: '' });
-		} catch (err) {
-			setSupervisorError(err?.response?.data?.message || 'No se pudo crear el supervisor');
-		} finally {
-			setSupervisorSaving(false);
-		}
-	}
 
 	return (
 		<section className="dashboard-page">
@@ -213,34 +190,7 @@ export default function Dashboard() {
 							/>
 						</div>
 					</article>
-					{isAdmin ? (
-						<article className="page-panel">
-							<div className="section-heading compact">
-								<p className="eyebrow">Admin</p>
-								<h3>Crear supervisor</h3>
-								<p>Solo el administrador puede registrar nuevos supervisores.</p>
-							</div>
-							<form className="stack" onSubmit={handleSupervisorSubmit}>
-								<label className="field">
-									<span>Nombre completo</span>
-									<input name="nombre" value={supervisorForm.nombre} onChange={handleSupervisorChange} required />
-								</label>
-								<label className="field">
-									<span>Correo</span>
-									<input name="email" type="email" value={supervisorForm.email} onChange={handleSupervisorChange} required />
-								</label>
-								<label className="field">
-									<span>Contraseña</span>
-									<input name="password" type="password" value={supervisorForm.password} onChange={handleSupervisorChange} required />
-								</label>
-								{supervisorError ? <div className="form-error">{supervisorError}</div> : null}
-								{supervisorMessage ? <div className="form-success">{supervisorMessage}</div> : null}
-								<button className="primary-button" type="submit" disabled={supervisorSaving}>
-									{supervisorSaving ? 'Creando...' : 'Crear supervisor'}
-								</button>
-							</form>
-						</article>
-					) : null}
+
 				</div>
 			)}
 		</section>

@@ -2,7 +2,7 @@ const pool = require('../config/db');
 
 async function listRoutes() {
 	const [rows] = await pool.execute(
-		`SELECT r.id, r.nombre, r.zona_id, z.nombre AS zona_nombre, r.operario_id, u.nombre AS operario_nombre, r.fecha_inicio, r.fecha_fin, r.estado, r.created_at
+		`SELECT r.id, r.nombre, r.lugares_recorrido, r.zona_id, z.nombre AS zona_nombre, r.operario_id, u.nombre AS operario_nombre, r.fecha_inicio, r.fecha_fin, r.estado, r.created_at
 		 FROM rutas r
 		 LEFT JOIN zonas z ON z.id = r.zona_id
 		 LEFT JOIN usuarios u ON u.id = r.operario_id
@@ -13,7 +13,7 @@ async function listRoutes() {
 
 async function getRouteById(id) {
 	const [rows] = await pool.execute(
-		`SELECT r.id, r.nombre, r.zona_id, z.nombre AS zona_nombre, r.operario_id, u.nombre AS operario_nombre, r.fecha_inicio, r.fecha_fin, r.estado, r.created_at
+		`SELECT r.id, r.nombre, r.lugares_recorrido, r.zona_id, z.nombre AS zona_nombre, r.operario_id, u.nombre AS operario_nombre, r.fecha_inicio, r.fecha_fin, r.estado, r.created_at
 		 FROM rutas r
 		 LEFT JOIN zonas z ON z.id = r.zona_id
 		 LEFT JOIN usuarios u ON u.id = r.operario_id
@@ -23,21 +23,25 @@ async function getRouteById(id) {
 	return rows[0] || null;
 }
 
-async function createRoute({ nombre, zona_id = null, operario_id = null, fecha_inicio = null, fecha_fin = null, estado = 'pendiente' }) {
+async function createRoute({ nombre, lugares_recorrido = null, zona_id = null, operario_id = null, fecha_inicio = null, fecha_fin = null, estado = 'pendiente' }) {
 	const [result] = await pool.execute(
-		'INSERT INTO rutas (nombre, zona_id, operario_id, fecha_inicio, fecha_fin, estado) VALUES (?, ?, ?, ?, ?, ?)',
-		[nombre, zona_id, operario_id, fecha_inicio, fecha_fin, estado]
+		'INSERT INTO rutas (nombre, lugares_recorrido, zona_id, operario_id, fecha_inicio, fecha_fin, estado) VALUES (?, ?, ?, ?, ?, ?, ?)',
+		[nombre, lugares_recorrido, zona_id, operario_id, fecha_inicio, fecha_fin, estado]
 	);
 	return getRouteById(result.insertId);
 }
 
-async function updateRoute(id, { nombre, zona_id, operario_id, fecha_inicio, fecha_fin, estado }) {
+async function updateRoute(id, { nombre, lugares_recorrido, zona_id, operario_id, fecha_inicio, fecha_fin, estado }) {
 	const fields = [];
 	const values = [];
 
 	if (nombre !== undefined) {
 		fields.push('nombre = ?');
 		values.push(nombre);
+	}
+	if (lugares_recorrido !== undefined) {
+		fields.push('lugares_recorrido = ?');
+		values.push(lugares_recorrido);
 	}
 	if (zona_id !== undefined) {
 		fields.push('zona_id = ?');

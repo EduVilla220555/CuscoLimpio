@@ -51,6 +51,7 @@ CREATE TABLE IF NOT EXISTS residuos (
 CREATE TABLE IF NOT EXISTS rutas (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	nombre VARCHAR(140) NOT NULL,
+	lugares_recorrido TEXT,
 	zona_id INT,
 	operario_id INT,
 	fecha_inicio DATE,

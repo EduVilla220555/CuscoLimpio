@@ -5,6 +5,7 @@ import useAuth from '../../hooks/useAuth';
 
 const initialForm = {
 	nombre: '',
+	lugares_recorrido: '',
 	operario_id: '',
 	fecha_inicio: '',
 	fecha_fin: '',
@@ -386,6 +387,7 @@ export default function Rutas() {
 		setEditingId(item.id);
 		setForm({
 			nombre: item.nombre || '',
+			lugares_recorrido: item.lugares_recorrido || '',
 			operario_id: item.operario_id ?? '',
 			fecha_inicio: item.fecha_inicio || '',
 			fecha_fin: item.fecha_fin || '',
@@ -408,6 +410,7 @@ export default function Rutas() {
 		try {
 			const payload = {
 				nombre: form.nombre,
+				lugares_recorrido: form.lugares_recorrido,
 				zona_id: null,
 				operario_id: form.operario_id === '' ? null : Number(form.operario_id),
 				fecha_inicio: form.fecha_inicio || null,
@@ -604,6 +607,7 @@ export default function Rutas() {
 						</div>
 						<form className="stack" onSubmit={handleSubmit}>
 							<label className="field"><span>Nombre de Ruta (Distrito de Cusco)</span><input name="nombre" value={form.nombre} onChange={handleChange} required placeholder="Ej. Ruta Centro Histórico" /></label>
+							<label className="field"><span>Lugares de Recorrido</span><textarea name="lugares_recorrido" rows="2" value={form.lugares_recorrido} onChange={handleChange} placeholder="Ej. Av. El Sol, Mercado San Pedro..."></textarea></label>
 							<label className="field">
 								<span>Operador</span>
 								<select name="operario_id" value={form.operario_id} onChange={handleChange}>
@@ -641,6 +645,7 @@ export default function Rutas() {
 									<tr>
 										<th>Nombre de Ruta</th>
 										<th>Distrito</th>
+										<th>Lugares de Recorrido</th>
 										<th>Fechas</th>
 										<th>Estado</th>
 										{isOperator ? <th></th> : null}
@@ -661,6 +666,7 @@ export default function Rutas() {
 										>
 											<td style={{ fontWeight: selectedRouteId === item.id ? 'bold' : 'normal' }}>{item.nombre}</td>
 											<td><span style={{ padding: '4px 8px', borderRadius: '4px', fontSize: '0.75rem', background: 'rgba(0,0,0,0.05)', color: 'var(--muted)' }}>Cusco, Cusco</span></td>
+											<td style={{ fontSize: '0.85rem', color: 'var(--muted)', maxWidth: '200px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.lugares_recorrido || '-'}</td>
 											<td style={{ fontSize: '0.85rem' }}>
 												{item.fecha_inicio ? new Date(item.fecha_inicio).toLocaleDateString() : '-'} 
 												<br />a<br /> 

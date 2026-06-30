@@ -154,9 +154,12 @@ export default function Alertas() {
 								<span>Tipo</span>
 								<select name="tipo" value={form.tipo} onChange={handleChange} required>
 									<option value="">Seleccione tipo...</option>
-									<option value="Incidencia">Incidencia</option>
-									<option value="Retraso">Retraso</option>
-									<option value="Obstrucción de vía">Obstrucción de vía</option>
+									<option value="Acumulación Excesiva">Acumulación Excesiva</option>
+									<option value="Incidencia Vehicular">Incidencia Vehicular</option>
+									<option value="Bloqueo de Vía">Bloqueo de Vía</option>
+									<option value="Incidencia de Seguridad">Incidencia de Seguridad</option>
+									<option value="Derrame de Peligrosos">Derrame de Peligrosos</option>
+									<option value="Clima Adverso">Clima Adverso</option>
 								</select>
 							</label>
 							<label className="field"><span>Descripción</span><textarea name="descripcion" rows="4" value={form.descripcion} onChange={handleChange} required /></label>

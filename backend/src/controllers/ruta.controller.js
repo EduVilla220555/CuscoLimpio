@@ -26,14 +26,14 @@ async function show(req, res, next) {
 
 async function store(req, res, next) {
 	try {
-		const { nombre, zona_id = null, operario_id = null, fecha_inicio = null, fecha_fin = null, estado = 'pendiente' } = req.body;
+		const { nombre, lugares_recorrido = null, zona_id = null, operario_id = null, fecha_inicio = null, fecha_fin = null, estado = 'pendiente' } = req.body;
 		if (!nombre) {
 			return sendJSON(res, 400, { success: false, message: 'nombre es obligatorio' });
 		}
 		if (!validStates.has(estado)) {
 			return sendJSON(res, 400, { success: false, message: 'Estado inválido' });
 		}
-		const route = await rutaModel.createRoute({ nombre, zona_id, operario_id, fecha_inicio, fecha_fin, estado });
+		const route = await rutaModel.createRoute({ nombre, lugares_recorrido, zona_id, operario_id, fecha_inicio, fecha_fin, estado });
 		return sendJSON(res, 201, { success: true, message: 'Ruta creada correctamente', data: route });
 	} catch (error) {
 		return next(error);
